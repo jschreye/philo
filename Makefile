@@ -6,13 +6,13 @@
 #    By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 10:49:34 by jschreye          #+#    #+#              #
-#    Updated: 2022/03/23 14:26:08 by jschreye         ###   ########.fr        #
+#    Updated: 2022/03/28 14:03:38 by jschreye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 NAME = philo
 
@@ -23,7 +23,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(SRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
 	
 clean:
 		rm -rf $(OBJ)
