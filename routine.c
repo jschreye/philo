@@ -6,7 +6,7 @@
 /*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:01:52 by jschreye          #+#    #+#             */
-/*   Updated: 2022/03/30 11:50:10 by jschreye         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:28:31 by jschreye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->index_philo % 2 != 0)
+	if (philo->index_philo % 2 == 0)
 		usleep(1000);
 	while (1)
 	{
