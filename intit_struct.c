@@ -6,7 +6,7 @@
 /*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:03:12 by jschreye          #+#    #+#             */
-/*   Updated: 2022/03/30 10:57:26 by jschreye         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:28:45 by jschreye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	ft_check_argv(char **argv, t_param *param)
 			if (argv[i][j] >= 48 && argv[i][j] <= 57)
 				j++;
 			else
+			{
+				write (1, "Error it s not a number\n", 24);
 				return (1);
+			}
 		}
 		i--;
 	}
@@ -45,6 +48,11 @@ int	ft_init_struct(char **argv, t_param *param, t_philo *philo)
 		param->time_to_sleep = ft_atoi(argv[4]);
 		if (param->argc == 6)
 			philo->nb_of_eat = ft_atoi(argv[5]);
+	}
+	if(param->nbr_philo < 1)
+	{
+		write (1, "Error nbr_philo\n", 16);
+		return (1);
 	}
 	return (0);
 }
