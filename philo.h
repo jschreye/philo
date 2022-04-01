@@ -6,7 +6,7 @@
 /*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 10:52:01 by jschreye          #+#    #+#             */
-/*   Updated: 2022/03/30 11:05:12 by jschreye         ###   ########.fr       */
+/*   Updated: 2022/03/31 18:37:31 by jschreye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_param
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	pthread_mutex_t	*mutex_sleep;
+	pthread_mutex_t	*mutex_thinking;
 	pthread_mutex_t	*mutex;
 }					t_param;
 
@@ -49,5 +51,6 @@ void	*ft_routine(void *arg);
 t_philo	*ft_init_thread(t_philo *philo, t_param *param);
 int		ft_new_tab(t_philo *valeur);
 long	get_current_time_ms(void);
+int		ft_join(t_philo *tab_philo);
 
 #endif

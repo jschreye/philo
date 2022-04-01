@@ -6,7 +6,7 @@
 /*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:01:52 by jschreye          #+#    #+#             */
-/*   Updated: 2022/03/30 14:10:35 by jschreye         ###   ########.fr       */
+/*   Updated: 2022/04/01 09:50:28 by jschreye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,17 @@ void	ft_routine_bis(t_philo *philo)
 	sleep_ms(philo->param->time_to_eat);
 	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_lock(philo->param->mutex_sleep);
 	printf("%6ld %d is sleeping\n", get_current_time_ms()
 		- philo->init_time, philo->index_philo);
+	pthread_mutex_unlock(philo->param->mutex_sleep);
 	sleep_ms(philo->param->time_to_sleep);
+	pthread_mutex_lock(philo->param->mutex_thinking);
 	printf("%6ld %d is thinking\n", get_current_time_ms()
 		- philo->init_time, philo->index_philo);
+	pthread_mutex_unlock(philo->param->mutex_thinking);
 	philo->nb_of_eat--;
+	usleep(100);
 }
 
 void	*ft_routine(void *arg)
@@ -61,7 +66,7 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->index_philo % 2 == 0)
+	if (philo->index_philo % 2 == 1)
 		usleep(1000);
 	while (1)
 	{

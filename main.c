@@ -6,7 +6,7 @@
 /*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 10:51:45 by jschreye          #+#    #+#             */
-/*   Updated: 2022/03/30 14:27:32 by jschreye         ###   ########.fr       */
+/*   Updated: 2022/04/01 09:51:23 by jschreye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,27 @@ int	ft_check_routine(t_philo *philo, t_param *param, t_philo *tab_philo)
 			if (get_current_time_ms() - tab_philo[i].last_meal
 				>= param->time_to_die)
 			{
-				printf("%6ld %d died\n", get_current_time_ms()
+				printf("%ld %d died\n", get_current_time_ms()
 					- tab_philo[i].init_time, i + 1);
 				return (0);
 			}
 			i++;
 		}
 	}	
+}
+
+int	ft_join(t_philo *tab_philo)
+{
+	int i;
+	void *ret;
+
+	i = 0;
+	while (i < tab_philo->param->nbr_philo)
+	{
+		pthread_join(&tab_philo->thread_philo[i], &ret);
+		i++;
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -47,7 +61,7 @@ int	main(int argc, char **argv)
 	if (param.argc == 5 || param.argc == 6)
 	{
 		if (ft_init_struct(argv, &param, &philo) == 1)
-			return (0);
+			return (1);
 		tab_philo = ft_init_thread(&philo, &param);
 		if (tab_philo == NULL)
 		{
