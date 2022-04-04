@@ -27,9 +27,9 @@ typedef struct s_param
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	pthread_mutex_t	*mutex;
 	pthread_mutex_t	*mutex_sleep;
 	pthread_mutex_t	*mutex_thinking;
-	pthread_mutex_t	*mutex;
 }					t_param;
 
 typedef struct s_philo
@@ -40,17 +40,16 @@ typedef struct s_philo
 	int				index_philo;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;	
-	pthread_t		thread_philo;
+	pthread_t		*thread_philo;
 	t_param			*param;
 }					t_philo;
 
 int		ft_atoi(const char *str);
-int		ft_init_struct(char **argv, t_param *param, t_philo *philo);
+int		ft_init_struct(char **argv, t_philo *philo);
 int		ft_free(t_philo *philo);
 void	*ft_routine(void *arg);
 t_philo	*ft_init_thread(t_philo *philo, t_param *param);
 int		ft_new_tab(t_philo *valeur);
 long	get_current_time_ms(void);
-int		ft_join(t_philo *tab_philo);
 
 #endif

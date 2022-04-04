@@ -12,12 +12,12 @@
 
 #include "philo.h"
 
-int	ft_check_argv(char **argv, t_param *param)
+int	ft_check_argv(char **argv, t_philo *philo)
 {
 	int	i;
 	int	j;
 
-	i = param->argc - 1;
+	i = philo->param->argc - 1;
 	while (i > 0)
 	{
 		j = 0;
@@ -36,23 +36,23 @@ int	ft_check_argv(char **argv, t_param *param)
 	return (0);
 }
 
-int	ft_init_struct(char **argv, t_param *param, t_philo *philo)
+int	ft_init_struct(char **argv, t_philo *philo)
 {
-	if (ft_check_argv(argv, param) == 1)
+	if (ft_check_argv(argv, philo) == 1)
 		return (1);
 	else
 	{
-		param->nbr_philo = ft_atoi(argv[1]);
-		param->time_to_die = ft_atoi(argv[2]);
-		param->time_to_eat = ft_atoi(argv[3]);
-		param->time_to_sleep = ft_atoi(argv[4]);
-		if (param->argc == 6)
+		philo->param->nbr_philo = ft_atoi(argv[1]);
+		if (philo->param->nbr_philo == 0)
+		{
+			write (1, "Error nbr_philo\n", 16);
+			return (1);
+		}
+		philo->param->time_to_die = ft_atoi(argv[2]);
+		philo->param->time_to_eat = ft_atoi(argv[3]);
+		philo->param->time_to_sleep = ft_atoi(argv[4]);
+		if (philo->param->argc == 6)
 			philo->nb_of_eat = ft_atoi(argv[5]);
-	}
-	if (param->nbr_philo < 1)
-	{
-		write (1, "Error nbr_philo\n", 16);
-		return (1);
 	}
 	return (0);
 }

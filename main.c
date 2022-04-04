@@ -22,10 +22,14 @@ int	ft_check_routine(t_philo *philo, t_param *param, t_philo *tab_philo)
 		while (i < philo->param->nbr_philo)
 		{
 			if (tab_philo[i].nb_of_eat == 0)
+			{
+				usleep(100);
 				return (0);
+			}
 			if (get_current_time_ms() - tab_philo[i].last_meal
 				>= param->time_to_die)
 			{
+				usleep(100);
 				printf("%ld %d died\n", get_current_time_ms()
 					- tab_philo[i].init_time, i + 1);
 				return (0);
@@ -35,7 +39,7 @@ int	ft_check_routine(t_philo *philo, t_param *param, t_philo *tab_philo)
 	}	
 }
 
-int	ft_join(t_philo *tab_philo)
+/*int	ft_join(t_philo *tab_philo)
 {
 	int i;
 	void *ret;
@@ -47,7 +51,7 @@ int	ft_join(t_philo *tab_philo)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int	main(int argc, char **argv)
 {
@@ -60,18 +64,15 @@ int	main(int argc, char **argv)
 	philo.param = &param;
 	if (param.argc == 5 || param.argc == 6)
 	{
-		if (ft_init_struct(argv, &param, &philo) == 1)
+		if (ft_init_struct(argv, &philo) == 1)
 			return (1);
 		tab_philo = ft_init_thread(&philo, &param);
 		if (tab_philo == NULL)
-		{
-			ft_free(&philo);
 			return (1);
-		}
-		ft_check_routine(&philo, &param, tab_philo);
+		if (ft_check_routine(&philo, &param, tab_philo) == 1)
+			ft_free(&philo);
 	}
 	else
 		write(1, "Error argument\n", 15);
-	ft_free(&philo);
 	return (0);
 }
