@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: grubin <grubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 16:01:52 by jschreye          #+#    #+#             */
-/*   Updated: 2022/04/01 09:50:28 by jschreye         ###   ########.fr       */
+/*   Created: 2022/03/17 16:02:17 by grubin            #+#    #+#             */
+/*   Updated: 2022/04/01 14:27:02 by grubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_current_time_ms(void)
+long	current_time(void)
 {
 	struct timeval	time;
 
@@ -25,42 +25,39 @@ void	sleep_ms(int ms)
 	long	start;
 	long	curr;
 
-	start = get_current_time_ms();
+	start = current_time();
 	curr = start;
 	while (curr < start + ms)
 	{
-		curr = get_current_time_ms();
+		curr = current_time();
 		usleep(200);
 	}
 }
 
-int	ft_routine_bis(t_philo *philo)
+void	ft_routine_bis(t_philo *philo)
 {
-	if (get_current_time_ms() - philo->last_meal >= philo->param->time_to_die)
-		return (1);
 	pthread_mutex_lock(philo->fork_left);
-	printf("%6ld %d has take a fork left\n", get_current_time_ms()
+	printf("%6ld %d  has taken a fork left\n", current_time()
 		- philo->init_time, philo->index_philo);
 	pthread_mutex_lock(philo->fork_right);
-	printf("%6ld %d has take a fork right\n", get_current_time_ms()
+	printf("%6ld %d  has taken a fork right\n", current_time()
 		- philo->init_time, philo->index_philo);
-	printf("%6ld %d is eating\n", get_current_time_ms()
+	printf("%6ld %d  is eating\n", current_time()
 		- philo->init_time, philo->index_philo);
-	philo->last_meal = get_current_time_ms();
-	sleep_ms(philo->param->time_to_eat);
+	philo->last_meal = current_time();
+	sleep_ms(philo->params->time_to_eat);
 	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
-	pthread_mutex_lock(philo->param->mutex_sleep);
-	printf("%6ld %d is sleeping\n", get_current_time_ms()
+	pthread_mutex_lock(philo->params->mutex_sleeping);
+	printf("%6ld %d  is sleeping\n", current_time()
 		- philo->init_time, philo->index_philo);
-	pthread_mutex_unlock(philo->param->mutex_sleep);
-	sleep_ms(philo->param->time_to_sleep);
-	pthread_mutex_lock(philo->param->mutex_thinking);
-	printf("%6ld %d is thinking\n", get_current_time_ms()
+	pthread_mutex_unlock(philo->params->mutex_sleeping);
+	sleep_ms(philo->params->time_to_sleep);
+	pthread_mutex_lock(philo->params->mutex_thinging);
+	printf("%6ld %d  is thinking\n", current_time()
 		- philo->init_time, philo->index_philo);
-	pthread_mutex_unlock(philo->param->mutex_thinking);
+	pthread_mutex_unlock(philo->params->mutex_thinging);
 	philo->nb_of_eat--;
-	return (0);
 }
 
 void	*ft_routine(void *arg)
@@ -72,12 +69,11 @@ void	*ft_routine(void *arg)
 		usleep(1000);
 	while (1)
 	{
-		if (philo->nb_of_eat == 1)
+		if (philo->nb_of_eat == 0)
 			break ;
-		if (get_current_time_ms() - philo->last_meal >= philo->param->time_to_die)
-			break ;	
-		if (ft_routine_bis(philo) == 1)
+		if (current_time() - philo->last_meal >= philo->params->time_to_die)
 			break ;
+		ft_routine_bis(philo);
 	}
 	return (0);
 }

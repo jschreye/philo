@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+         #
+#    By: grubin <grubin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/07 10:49:34 by jschreye          #+#    #+#              #
-#    Updated: 2022/03/28 14:03:38 by jschreye         ###   ########.fr        #
+#    Created: 2022/03/15 16:05:10 by grubin            #+#    #+#              #
+#    Updated: 2022/03/30 14:54:54 by grubin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,21 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 NAME = philo
 
-SRC = utils.c main.c intit_struct.c free.c routine.c init_thread.c
+SRC = main.c utils.c init_struct.c init_threads.c routine.c
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all : $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
-	
+
 clean:
-		rm -rf $(OBJ)
+	rm -rf $(OBJ)
 
-fclean: clean
-		rm -rf $(NAME)
+fclean : clean
+	rm -rf $(NAME)
 
-re: fclean all
+re : fclean all
 
 .PHONY: all clean fclean re

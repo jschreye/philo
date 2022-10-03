@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intit_struct.c                                     :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschreye <jschreye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: grubin <grubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 13:03:12 by jschreye          #+#    #+#             */
-/*   Updated: 2022/03/31 16:24:24 by jschreye         ###   ########.fr       */
+/*   Created: 2022/03/16 13:02:25 by grubin            #+#    #+#             */
+/*   Updated: 2022/03/31 16:26:30 by grubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_check_argv(char **argv, t_philo *philo)
 	int	i;
 	int	j;
 
-	i = philo->param->argc - 1;
+	i = philo->params->argc - 1;
 	while (i > 0)
 	{
 		j = 0;
@@ -27,7 +27,7 @@ int	ft_check_argv(char **argv, t_philo *philo)
 				j++;
 			else
 			{
-				write (1, "Error: not a number\n", 20);
+				write(1, "error not a number\n", 19);
 				return (1);
 			}
 		}
@@ -42,16 +42,16 @@ int	ft_init_struct(char **argv, t_philo *philo)
 		return (1);
 	else
 	{
-		philo->param->nbr_philo = ft_atoi(argv[1]);
-		if (philo->param->nbr_philo == 0)
+		philo->params->nb_philo = ft_atoi(argv[1]);
+		if (philo->params->nb_philo == 0)
 		{
-			write (1, "Error nbr_philo\n", 16);
+			write(1, "error no philo\n", 15);
 			return (1);
 		}
-		philo->param->time_to_die = ft_atoi(argv[2]);
-		philo->param->time_to_eat = ft_atoi(argv[3]);
-		philo->param->time_to_sleep = ft_atoi(argv[4]);
-		if (philo->param->argc == 6)
+		philo->params->time_to_die = ft_atoi(argv[2]);
+		philo->params->time_to_eat = ft_atoi(argv[3]);
+		philo->params->time_to_sleep = ft_atoi(argv[4]);
+		if (philo->params->argc == 6)
 			philo->nb_of_eat = ft_atoi(argv[5]);
 	}
 	return (0);
